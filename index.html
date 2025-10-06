@@ -7,15 +7,23 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="timer-container">
-      <div id="status">PAUSED</div>
-      <input type="text" id="timer" placeholder="00:00" value="" />
-      <div class="buttons">
-        <button id="start">Start</button>
-        <button id="pause">Pause</button>
-        <button id="reset">Reset</button>
-      </div>
+    <!-- Left vertical button container -->
+    <div class="button-container">
+      <button id="start">START</button>
+      <button id="pause">PAUSE</button>
+      <button id="reset">RESET</button>
     </div>
+
+    <!-- Timer container absolutely centered -->
+    <div class="center-container">
+      <input type="text" id="timer" placeholder="00:00" value="" />
+    </div>
+
+    <!-- Status container below timer -->
+    <div class="status-container">
+      <div id="status">PAUSED</div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
