@@ -7,7 +7,7 @@ let statusText = document.getElementById('status');
 let interval = null;
 let remainingSeconds = 0;
 // The seconds set when the reset button is pressed.
-let lastValidSeconds = 0; 
+let timeWhenReset = 0; 
 
 // Audio for end
 let endSound = new Audio('assets/sounds/timer-ended.mp3'); 
@@ -64,7 +64,7 @@ function updateDisplay() {
     timerInput.value = formatTime(remainingSeconds);
 }
 
-// Start button.
+//   Start button.
 startBtn.addEventListener('click', () => {
     let parsed = parseInput(timerInput.value);
     if (parsed === null || parsed <= 0) {
@@ -72,10 +72,8 @@ startBtn.addEventListener('click', () => {
         return;
     }
     remainingSeconds = parsed;
-    lastValidSeconds = parsed;
 
     timerInput.disabled = true;
-    // hide status so there's not too much stuff.
     updateStatus(''); 
     updateDisplay();
 
@@ -84,7 +82,6 @@ startBtn.addEventListener('click', () => {
             remainingSeconds--;
             updateDisplay();
             if (remainingSeconds <= 0) {
-                // Timer ended.
                 clearInterval(interval);
                 interval = null;
                 timerInput.disabled = false;
@@ -92,6 +89,14 @@ startBtn.addEventListener('click', () => {
                 playSound(); 
             }
         }, 1000);
+    }
+});
+
+// Update timeWhenReset whenever user types a new value.
+timerInput.addEventListener('input', () => {
+    let parsed = parseInput(timerInput.value);
+    if (parsed !== null && parsed > 0) {
+        timeWhenReset = parsed;
     }
 });
 
@@ -107,7 +112,7 @@ pauseBtn.addEventListener('click', () => {
 resetBtn.addEventListener('click', () => {
     clearInterval(interval);
     interval = null;
-    remainingSeconds = lastValidSeconds || 0;
+    remainingSeconds = timeWhenReset || 0;
     updateDisplay();
     timerInput.disabled = false;
     updateStatus('PAUSED');
